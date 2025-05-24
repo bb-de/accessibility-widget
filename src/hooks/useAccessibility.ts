@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useAccessibility() {
+export function useWidgetToggle() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleWidget = () => setIsOpen(prev => !prev);
