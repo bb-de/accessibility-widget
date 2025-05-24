@@ -56,7 +56,7 @@ const defaultTranslations = {
   alignmentSpacing: 'Ausrichtung & Abstand',
   textAlignLeft: 'Links',
   textAlignCenter: 'Zentriert',
-  textAlignRight: 'Rechts'
+  textAlignRight: 'Rechts',
 };
 
 export function useAccessibility() {
@@ -83,42 +83,50 @@ export function useAccessibility() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
 
+  // 🔄 Visuelle Änderungen erkannt → body Klasse setzen oder entfernen
+  useEffect(() => {
+    const visualSettings = [
+      'contrastMode',
+      'saturation',
+      'monochrome',
+      'textColor',
+      'titleColor',
+      'backgroundColor',
+      'textSize',
+      'lineHeight',
+      'letterSpacing',
+      'darkMode',
+      'hideImages',
+      'stopAnimations',
+      'fontFamily',
+      'wordSpacing',
+      'textAlign'
+    ];
+
+    const isModified = visualSettings.some((key) => {
+      const current = settings[key];
+      const original = defaultSettings[key];
+      return current !== original;
+    });
+
+    const body = document.body;
+    if (isModified) {
+      body.classList.add('a11y-widget-modified');
+    } else {
+      body.classList.remove('a11y-widget-modified');
+    }
+  }, [settings]);
+
   const toggleWidget = () => setIsOpen(prev => !prev);
   const closeWidget = () => setIsOpen(false);
 
   const updateSetting = <K extends keyof AccessibilitySettings>(key: K, value: AccessibilitySettings[K]) => {
-    setSettings(prev => {
-      const newSettings = { ...prev, [key]: value };
-
-      // Klasse vorbereiten und auf body anwenden
-      const body = document.body;
-      const prefix = 'a11y-';
-
-      // Vorherige Klasse entfernen (nur falls es eine vorherige gab)
-      if (prev[key] !== undefined) {
-        const oldClass = `${prefix}${key}-${String(prev[key]).toLowerCase()}`;
-        body.classList.remove(oldClass);
-      }
-
-      // Neue Klasse hinzufügen (nur wenn nicht "default", false oder 0)
-      if (value !== 'default' && value !== false && value !== 0) {
-        const newClass = `${prefix}${key}-${String(value).toLowerCase()}`;
-        body.classList.add(newClass);
-      }
-
-      return newSettings;
-    });
+    setSettings(prev => ({ ...prev, [key]: value }));
   };
 
   const resetSettings = () => {
-    // Klassen vom Body entfernen
-    const body = document.body;
-    const classesToRemove = Array.from(body.classList).filter(cls =>
-      cls.startsWith('a11y-')
-    );
-    body.classList.remove(...classesToRemove);
-
     setSettings(defaultSettings);
+    document.body.classList.remove('a11y-widget-modified');
   };
 
   const incrementSetting = (key: keyof AccessibilitySettings) => {
