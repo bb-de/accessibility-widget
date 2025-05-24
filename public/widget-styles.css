@@ -665,3 +665,9 @@
 #a11y-widget-visible {
   display: block !important;
 }
+/* ============================================================
+   Reset-Klasse für vollständige visuelle Zurücksetzung
+   ============================================================ */
+body.a11y-widget-modified {
+  all: unset !important;
+}
