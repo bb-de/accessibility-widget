@@ -155,3 +155,10 @@ export function useAccessibility() {
     translations
   };
 }
+  // 🌓 Automatisch color-scheme setzen für OS/Browser Unterstützung
+  useEffect(() => {
+    const html = document.documentElement;
+
+    const prefersDark = settings.darkMode || settings.contrastMode === 'high';
+    html.setAttribute('color-scheme', prefersDark ? 'dark' : 'light');
+  }, [settings.darkMode, settings.contrastMode]);
