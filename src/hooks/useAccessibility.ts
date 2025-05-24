@@ -86,16 +86,57 @@ export function useAccessibility() {
   const toggleWidget = () => setIsOpen(prev => !prev);
   const closeWidget = () => setIsOpen(false);
 
-  const updateSetting = <K extends keyof AccessibilitySettings>(key: K, value: AccessibilitySettings[K]) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+  const updateSetting = <K extends keyof AccessibilitySettings>(
+    key: K,
+    value: AccessibilitySettings[K]
+  ) => {
+    setSettings(prev => {
+      const newSettings = { ...prev, [key]: value };
+
+      // Theme-Klassen bei bestimmten Einstellungen anpassen
+      const html = document.documentElement;
+      html.classList.remove(
+        'a11y-widget-theme-dark',
+        'a11y-widget-theme-high-contrast',
+        'a11y-widget-modified'
+      );
+
+      if (newSettings.contrastMode === 'high') {
+        html.classList.add('a11y-widget-theme-high-contrast');
+      } else if (newSettings.darkMode) {
+        html.classList.add('a11y-widget-theme-dark');
+      }
+
+      // Setze ein Flag, dass Modifikationen aktiv sind
+      if (
+        newSettings.contrastMode !== 'default' ||
+        newSettings.saturation !== 100 ||
+        newSettings.monochrome !== 0 ||
+        newSettings.textColor !== 'default' ||
+        newSettings.titleColor !== 'default' ||
+        newSettings.backgroundColor !== 'default' ||
+        newSettings.textSize !== 0 ||
+        newSettings.lineHeight !== 0 ||
+        newSettings.letterSpacing !== 0 ||
+        newSettings.darkMode ||
+        newSettings.hideImages ||
+        newSettings.stopAnimations
+      ) {
+        html.classList.add('a11y-widget-modified');
+      }
+
+      return newSettings;
+    });
   };
 
   const resetSettings = () => {
+    const html = document.documentElement;
+    html.classList.remove(
+      'a11y-widget-theme-dark',
+      'a11y-widget-theme-high-contrast',
+      'a11y-widget-modified'
+    );
     setSettings(defaultSettings);
-
-    // Entferne evtl. gesetzte HTML-Klassen
-    document.documentElement.removeAttribute('color-scheme');
-    document.body.classList.remove('a11y-widget-modified');
   };
 
   const incrementSetting = (key: keyof AccessibilitySettings) => {
