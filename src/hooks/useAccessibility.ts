@@ -87,7 +87,27 @@ export function useAccessibility() {
   const closeWidget = () => setIsOpen(false);
 
   const updateSetting = <K extends keyof AccessibilitySettings>(key: K, value: AccessibilitySettings[K]) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+    setSettings(prev => {
+      const newSettings = { ...prev, [key]: value };
+
+      // Klasse vorbereiten und auf body anwenden
+      const body = document.body;
+      const prefix = 'a11y-';
+
+      // Vorherige Klasse entfernen (nur falls es eine vorherige gab)
+      if (prev[key] !== undefined) {
+        const oldClass = `${prefix}${key}-${String(prev[key]).toLowerCase()}`;
+        body.classList.remove(oldClass);
+      }
+
+      // Neue Klasse hinzufügen (nur wenn nicht "default", false oder 0)
+      if (value !== 'default' && value !== false && value !== 0) {
+        const newClass = `${prefix}${key}-${String(value).toLowerCase()}`;
+        body.classList.add(newClass);
+      }
+
+      return newSettings;
+    });
   };
 
   const resetSettings = () => {
@@ -98,7 +118,6 @@ export function useAccessibility() {
     );
     body.classList.remove(...classesToRemove);
 
-    // Einstellungen zurücksetzen
     setSettings(defaultSettings);
   };
 
