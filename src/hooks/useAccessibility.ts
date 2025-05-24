@@ -1,7 +1,14 @@
-import { useEffect } from "react";
+import { useState } from 'react';
 
-export const useAccessibility = () => {
-  useEffect(() => {
-    console.log("Accessibility hook initialized");
-  }, []);
-};
+export function useAccessibility() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleWidget = () => setIsOpen(prev => !prev);
+  const closeWidget = () => setIsOpen(false);
+
+  return {
+    isOpen,
+    toggleWidget,
+    closeWidget
+  };
+}
