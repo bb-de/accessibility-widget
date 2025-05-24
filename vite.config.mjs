@@ -1,23 +1,29 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'public',
-    emptyOutDir: true,
+    lib: {
+      entry: path.resolve(__dirname, 'src/index.tsx'),
+      name: 'AccessibilityWidget',
+      fileName: (format) => `accessibility-widget.${format}.js`,
+      formats: ['iife'], // für direkte Nutzung im <script>
+    },
     rollupOptions: {
-      input: path.resolve(__dirname, 'src/index.tsx'),
+      external: ['react', 'react-dom'],
       output: {
-        entryFileNames: 'widget-main.js',
-        assetFileNames: 'widget-styles.css',
-      }
-    }
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    }
-  }
-})
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
+});
