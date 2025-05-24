@@ -1,3 +1,5 @@
+// @ts-ignore
+import { IconName } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { ProfilesTab } from "./ProfilesTab";
 import { VisionTab } from "./VisionTab";
