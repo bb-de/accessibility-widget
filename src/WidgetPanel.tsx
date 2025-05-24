@@ -8,8 +8,9 @@ import { NavigationTab } from "./NavigationTab";
 import { WidgetFooter } from "./WidgetFooter";
 import { LanguageSelector } from "./LanguageSelector";
 import { AccessibleLogoInline } from "./AccessibleLogoInline";
-import { useAccessibility } from "@/hooks/useAccessibility";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useAccessibility } from "./hooks/useAccessibility";
+import { useIsMobile } from "./hooks/use-mobile";
+
 import { 
   UserCog, 
   Eye, 
