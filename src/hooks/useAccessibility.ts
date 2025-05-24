@@ -56,7 +56,7 @@ const defaultTranslations = {
   alignmentSpacing: 'Ausrichtung & Abstand',
   textAlignLeft: 'Links',
   textAlignCenter: 'Zentriert',
-  textAlignRight: 'Rechts',
+  textAlignRight: 'Rechts'
 };
 
 export function useAccessibility() {
@@ -65,6 +65,7 @@ export function useAccessibility() {
   const [language, setLanguage] = useState<'de' | 'en' | 'fr' | 'es'>('de');
   const [translations, setTranslations] = useState(defaultTranslations);
 
+  // Load from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -77,43 +78,9 @@ export function useAccessibility() {
     }
   }, []);
 
+  // Save to localStorage on change
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-  }, [settings]);
-
-  // 🧠 Dynamische Body-Klassen anwenden
-  useEffect(() => {
-    const body = document.body;
-    const classesToRemove = Array.from(body.classList).filter(cls =>
-      cls.startsWith('a11y-')
-    );
-    body.classList.remove(...classesToRemove);
-
-    // Core-Modi
-    if (settings.darkMode) body.classList.add('a11y-darkmode');
-    if (settings.contrastMode === 'high') body.classList.add('a11y-high-contrast');
-    if (settings.monochrome > 50) body.classList.add('a11y-monochrome');
-
-    // Erweiterte Einstellungen
-    if (settings.hideImages) body.classList.add('a11y-hide-images');
-    if (settings.stopAnimations) body.classList.add('a11y-stop-animations');
-    if (settings.readingMask) body.classList.add('a11y-reading-mask');
-    if (settings.readingGuide) body.classList.add('a11y-reading-guide');
-
-    // Textgröße
-    body.classList.add(`a11y-textsize-${settings.textSize}`);
-
-    // Font
-    if (settings.fontFamily !== 'default') {
-      body.classList.add(`a11y-font-${settings.fontFamily}`);
-    }
-
-    // Cursor
-    if (settings.customCursor) {
-      body.classList.add(`a11y-cursor`);
-      body.classList.add(`a11y-cursor-size-${settings.cursorSize}`);
-      body.classList.add(`a11y-cursor-color-${settings.cursorColor}`);
-    }
   }, [settings]);
 
   const toggleWidget = () => setIsOpen(prev => !prev);
@@ -124,17 +91,16 @@ export function useAccessibility() {
   };
 
   const resetSettings = () => {
-  // Entferne alle a11y-Klassen vom Body
-  const body = document.body;
-  const classesToRemove = Array.from(body.classList).filter(cls =>
-    cls.startsWith('a11y-')
-  );
-  body.classList.remove(...classesToRemove);
+    // Klassen vom Body entfernen
+    const body = document.body;
+    const classesToRemove = Array.from(body.classList).filter(cls =>
+      cls.startsWith('a11y-')
+    );
+    body.classList.remove(...classesToRemove);
 
-  // Setze Einstellungen zurück
-  setSettings(defaultSettings);
-};
-
+    // Einstellungen zurücksetzen
+    setSettings(defaultSettings);
+  };
 
   const incrementSetting = (key: keyof AccessibilitySettings) => {
     if (typeof settings[key] === 'number') {
