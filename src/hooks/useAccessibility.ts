@@ -124,8 +124,17 @@ export function useAccessibility() {
   };
 
   const resetSettings = () => {
-    setSettings(defaultSettings);
-  };
+  // Entferne alle a11y-Klassen vom Body
+  const body = document.body;
+  const classesToRemove = Array.from(body.classList).filter(cls =>
+    cls.startsWith('a11y-')
+  );
+  body.classList.remove(...classesToRemove);
+
+  // Setze Einstellungen zurück
+  setSettings(defaultSettings);
+};
+
 
   const incrementSetting = (key: keyof AccessibilitySettings) => {
     if (typeof settings[key] === 'number') {
