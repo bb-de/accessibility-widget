@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { WidgetButton } from './WidgetButton';
 import { WidgetPanel } from './WidgetPanel';
-import { useAccessibility } from '@/hooks/useAccessibility';
+import { useAccessibility } from './hooks/useAccessibility';
 
 /**
  * Hauptkomponente des Accessibility-Widgets
