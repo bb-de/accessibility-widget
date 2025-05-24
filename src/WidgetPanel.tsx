@@ -44,13 +44,13 @@ export function WidgetPanel({ isOpen }: WidgetPanelProps) {
         isOpen ? 'translate-y-0 opacity-100 visible' : 'translate-y-[-100%] opacity-0 invisible'
       }`}
       style={{
-        width: '340px',
-        minWidth: '340px',
-        maxWidth: '340px',
-        maxHeight: '90vh',
-        overflowY: 'scroll',
-        scrollBehavior: 'smooth'
-      }}
+  width: isMobile ? '95vw' : '340px',
+  minWidth: isMobile ? '95vw' : '340px',
+  maxWidth: isMobile ? '95vw' : '340px',
+  maxHeight: '90vh',
+  overflowY: 'scroll',
+  scrollBehavior: 'smooth'
+    }}
       aria-hidden={!isOpen}
       onClick={(e) => e.stopPropagation()} // Prevent clicks inside the panel from closing it
     >
