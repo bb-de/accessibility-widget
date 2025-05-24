@@ -37,6 +37,9 @@ export function WidgetPanel({ isOpen }: WidgetPanelProps) {
   return (
     <div 
       id="accessibility-panel" 
+       role="dialog"
+       aria-modal="true"
+       aria-hidden={!isOpen}
       className={`fixed top-10 right-4 bg-white rounded-xl shadow-lg transition-all duration-300 transform z-[9999] ${
         isOpen ? 'translate-y-0 opacity-100 visible' : 'translate-y-[-100%] opacity-0 invisible'
       }`}
