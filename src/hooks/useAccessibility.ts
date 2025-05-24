@@ -83,40 +83,6 @@ export function useAccessibility() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  // 🔄 Visuelle Änderungen erkannt → body Klasse setzen oder entfernen
-  useEffect(() => {
-    const visualSettings = [
-      'contrastMode',
-      'saturation',
-      'monochrome',
-      'textColor',
-      'titleColor',
-      'backgroundColor',
-      'textSize',
-      'lineHeight',
-      'letterSpacing',
-      'darkMode',
-      'hideImages',
-      'stopAnimations',
-      'fontFamily',
-      'wordSpacing',
-      'textAlign'
-    ];
-
-    const isModified = visualSettings.some((key) => {
-      const current = settings[key];
-      const original = defaultSettings[key];
-      return current !== original;
-    });
-
-    const body = document.body;
-    if (isModified) {
-      body.classList.add('a11y-widget-modified');
-    } else {
-      body.classList.remove('a11y-widget-modified');
-    }
-  }, [settings]);
-
   const toggleWidget = () => setIsOpen(prev => !prev);
   const closeWidget = () => setIsOpen(false);
 
@@ -126,6 +92,9 @@ export function useAccessibility() {
 
   const resetSettings = () => {
     setSettings(defaultSettings);
+
+    // Entferne evtl. gesetzte HTML-Klassen
+    document.documentElement.removeAttribute('color-scheme');
     document.body.classList.remove('a11y-widget-modified');
   };
 
@@ -141,6 +110,13 @@ export function useAccessibility() {
     }
   };
 
+  // Automatisch color-scheme setzen für OS/Browser Unterstützung
+  useEffect(() => {
+    const html = document.documentElement;
+    const prefersDark = settings.darkMode || settings.contrastMode === 'high';
+    html.setAttribute('color-scheme', prefersDark ? 'dark' : 'light');
+  }, [settings.darkMode, settings.contrastMode]);
+
   return {
     isOpen,
     toggleWidget,
@@ -155,10 +131,3 @@ export function useAccessibility() {
     translations
   };
 }
-  // 🌓 Automatisch color-scheme setzen für OS/Browser Unterstützung
-  useEffect(() => {
-    const html = document.documentElement;
-
-    const prefersDark = settings.darkMode || settings.contrastMode === 'high';
-    html.setAttribute('color-scheme', prefersDark ? 'dark' : 'light');
-  }, [settings.darkMode, settings.contrastMode]);
