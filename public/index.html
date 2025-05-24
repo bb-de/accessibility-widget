@@ -1,13 +1,18 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Barrierefreiheit Widget</title>
-</head>
-<body>
-  <div id="root"></div>
-  <script type="module" src="/widget-main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barrierefreiheit Widget</title>
+
+    <!-- React & ReactDOM global laden -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  </head>
+  <body>
+    <h1>Demo: Barrierefreiheit Widget</h1>
+
+    <!-- Dein gebündeltes Widget -->
+    <script src="/accessibility-widget.iife.js"></script>
+  </body>
 </html>
