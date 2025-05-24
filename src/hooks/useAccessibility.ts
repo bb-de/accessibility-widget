@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { translations as translationMap } from '@/lib/translations';
 
 export type AccessibilitySettings = {
   [key: string]: any;
@@ -36,36 +37,11 @@ const defaultSettings: AccessibilitySettings = {
   pageStructure: false
 };
 
-const defaultTranslations = {
-  // Beispielwerte – du solltest hier deine realen Übersetzungen ergänzen
-  reset: 'Zurücksetzen',
-  resetAllSettings: 'Alle Einstellungen zurücksetzen',
-  accessibilityProfiles: 'Barrierefreiheits-Profile',
-  profiles: 'Profile',
-  vision: 'Sehen',
-  content: 'Inhalt',
-  navigation: 'Navigation',
-  readableFont: 'Lesefreundliche Schrift',
-  dyslexiaFont: 'Dyslexie-Schrift',
-  resetFont: 'Standard',
-  textToSpeech: 'Vorlesen',
-  highlightTitles: 'Überschriften hervorheben',
-  highlightLinks: 'Links hervorheben',
-  readingMask: 'Lesemaske',
-  readingGuide: 'Leseführer',
-  fontAdjustments: 'Schriftanpassungen',
-  alignmentSpacing: 'Ausrichtung & Abstand',
-  textAlignLeft: 'Links',
-  textAlignCenter: 'Zentriert',
-  textAlignRight: 'Rechts',
-  // etc.
-};
-
 export function useAccessibility() {
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState<AccessibilitySettings>(defaultSettings);
   const [language, setLanguage] = useState<'de' | 'en' | 'fr' | 'es'>('de');
-  const [translations, setTranslations] = useState(defaultTranslations);
+  const [translations, setTranslations] = useState(translationMap[language]);
 
   // Load from localStorage
   useEffect(() => {
@@ -84,6 +60,11 @@ export function useAccessibility() {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
+
+  // Update translations when language changes
+  useEffect(() => {
+    setTranslations(translationMap[language] || translationMap['en']);
+  }, [language]);
 
   const toggleWidget = () => setIsOpen(prev => !prev);
   const closeWidget = () => setIsOpen(false);
