@@ -83,14 +83,29 @@ export function useAccessibility() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  // Apply dark mode to <body>
+  // 🔄 Dynamische Body-Klassen basierend auf Einstellungen
   useEffect(() => {
+    const body = document.body;
+
+    // Entferne alte Klassen
+    body.classList.remove(
+      'a11y-darkmode',
+      'a11y-high-contrast',
+      'a11y-monochrome'
+    );
+
     if (settings.darkMode) {
-      document.body.classList.add('a11y-darkmode');
-    } else {
-      document.body.classList.remove('a11y-darkmode');
+      body.classList.add('a11y-darkmode');
     }
-  }, [settings.darkMode]);
+
+    if (settings.contrastMode === 'high') {
+      body.classList.add('a11y-high-contrast');
+    }
+
+    if (settings.monochrome > 50) {
+      body.classList.add('a11y-monochrome');
+    }
+  }, [settings.darkMode, settings.contrastMode, settings.monochrome]);
 
   const toggleWidget = () => setIsOpen(prev => !prev);
   const closeWidget = () => setIsOpen(false);
