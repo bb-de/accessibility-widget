@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { translations as translationMap } from '@/lib/translations';
 
 export type AccessibilitySettings = {
   [key: string]: any;
@@ -37,11 +36,34 @@ const defaultSettings: AccessibilitySettings = {
   pageStructure: false
 };
 
+const defaultTranslations = {
+  reset: 'Zurücksetzen',
+  resetAllSettings: 'Alle Einstellungen zurücksetzen',
+  accessibilityProfiles: 'Barrierefreiheits-Profile',
+  profiles: 'Profile',
+  vision: 'Sehen',
+  content: 'Inhalt',
+  navigation: 'Navigation',
+  readableFont: 'Lesefreundliche Schrift',
+  dyslexiaFont: 'Dyslexie-Schrift',
+  resetFont: 'Standard',
+  textToSpeech: 'Vorlesen',
+  highlightTitles: 'Überschriften hervorheben',
+  highlightLinks: 'Links hervorheben',
+  readingMask: 'Lesemaske',
+  readingGuide: 'Leseführer',
+  fontAdjustments: 'Schriftanpassungen',
+  alignmentSpacing: 'Ausrichtung & Abstand',
+  textAlignLeft: 'Links',
+  textAlignCenter: 'Zentriert',
+  textAlignRight: 'Rechts',
+};
+
 export function useAccessibility() {
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState<AccessibilitySettings>(defaultSettings);
   const [language, setLanguage] = useState<'de' | 'en' | 'fr' | 'es'>('de');
-  const [translations, setTranslations] = useState(translationMap[language]);
+  const [translations, setTranslations] = useState(defaultTranslations);
 
   // Load from localStorage
   useEffect(() => {
@@ -61,10 +83,14 @@ export function useAccessibility() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  // Update translations when language changes
+  // Apply dark mode to <body>
   useEffect(() => {
-    setTranslations(translationMap[language] || translationMap['en']);
-  }, [language]);
+    if (settings.darkMode) {
+      document.body.classList.add('a11y-darkmode');
+    } else {
+      document.body.classList.remove('a11y-darkmode');
+    }
+  }, [settings.darkMode]);
 
   const toggleWidget = () => setIsOpen(prev => !prev);
   const closeWidget = () => setIsOpen(false);
