@@ -13,28 +13,25 @@ export function AccessibilityWidget() {
   
   // Event-Listener für Klicks außerhalb des Widgets
   useEffect(() => {
-    // Nur hinzufügen, wenn das Widget geöffnet ist
     if (!isOpen) return;
-    
+
     const handleClickOutside = (event: MouseEvent) => {
-      // Wenn das Widget-Ref existiert und der Klick außerhalb ist
-      if (widgetRef.current && 
-          !widgetRef.current.contains(event.target as Node) &&
-          // Auch prüfen, ob es nicht der Button selbst ist
-          !(event.target as Element).closest('#accessibility-toggle')) {
+      if (
+        widgetRef.current &&
+        !widgetRef.current.contains(event.target as Node) &&
+        !(event.target as Element).closest('#accessibility-toggle')
+      ) {
         closeWidget();
       }
     };
-    
-    // Event-Listener hinzufügen
+
     document.addEventListener('mousedown', handleClickOutside);
-    
-    // Cleanup beim Unmounten oder Ändern der Dependencies
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, closeWidget]);
-  
+
   return (
     <>
       <WidgetButton onClick={toggleWidget} isOpen={isOpen} />
@@ -44,3 +41,6 @@ export function AccessibilityWidget() {
     </>
   );
 }
+
+// 🔧 Neu: Default-Export ergänzen, damit der Import in index.tsx funktioniert
+export default AccessibilityWidget;
