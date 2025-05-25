@@ -16,14 +16,13 @@ export default defineConfig({
       output: {
         globals: {
           react: 'React',
-          'react-dom': 'ReactDOM'
-        }
+          'react-dom': 'ReactDOM',
+        },
       },
     },
-    // 💡 Hier die Lösung:
-    define: {
-      'process.env.NODE_ENV': '"production"',
-    },
+  },
+  define: {
+    'process.env.NODE_ENV': '"production"',
   },
   resolve: {
     alias: {
