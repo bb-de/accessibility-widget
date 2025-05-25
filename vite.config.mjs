@@ -9,7 +9,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'AccessibilityWidget',
       fileName: (format) => `accessibility-widget.${format}.js`,
-      formats: ['iife'], // für direkte Nutzung im <script>
+      formats: ['iife'], // für direkte Nutzung via <script>
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
@@ -22,8 +22,8 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, 'src') },
+    ],
   },
 });
