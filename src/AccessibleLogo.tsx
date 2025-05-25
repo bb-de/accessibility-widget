@@ -6,16 +6,20 @@ interface AccessibleLogoProps {
   width?: number;
 }
 
-export function AccessibleLogo({ className, height = 120, width = 540 }: AccessibleLogoProps) {
+export function AccessibleLogo({
+  className = '',
+  height = 120,
+  width = 540
+}: AccessibleLogoProps) {
   return (
     <div className={`flex items-center ${className}`}>
       <img
-        src="/accessible-logo.png"
+        src="/accessible-logo.png" // public/accessible-logo.png
         alt="Accessible Logo"
         style={{
           height: `${height}px`,
           width: 'auto',
-          maxWidth: `${width}px`,
+          maxWidth: `${width}px`
         }}
         className="object-contain"
       />
