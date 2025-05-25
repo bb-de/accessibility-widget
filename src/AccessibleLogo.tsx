@@ -1,5 +1,4 @@
 import React from 'react';
-import accessibleLogoImage from '@/assets/accessible-logo.png';
 
 interface AccessibleLogoProps {
   className?: string;
@@ -10,13 +9,13 @@ interface AccessibleLogoProps {
 export function AccessibleLogo({ className, height = 120, width = 540 }: AccessibleLogoProps) {
   return (
     <div className={`flex items-center ${className}`}>
-      <img 
-        src={accessibleLogoImage} 
+      <img
+        src="/accessible-logo.png"
         alt="Accessible Logo"
-        style={{ 
-          height: `${height}px`, 
+        style={{
+          height: `${height}px`,
           width: 'auto',
-          maxWidth: `${width}px`
+          maxWidth: `${width}px`,
         }}
         className="object-contain"
       />
