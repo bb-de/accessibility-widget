@@ -1,3 +1,4 @@
+import './assets/style/widget-styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import AccessibilityWidget from './AccessibilityWidget';
