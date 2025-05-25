@@ -9,21 +9,25 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'AccessibilityWidget',
       fileName: (format) => `accessibility-widget.${format}.js`,
-      formats: ['iife'], // für direkte Nutzung via <script>
+      formats: ['iife'],
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
       output: {
         globals: {
           react: 'React',
-          'react-dom': 'ReactDOM',
-        },
+          'react-dom': 'ReactDOM'
+        }
       },
+    },
+    // 💡 Hier die Lösung:
+    define: {
+      'process.env.NODE_ENV': '"production"',
     },
   },
   resolve: {
-    alias: [
-      { find: '@', replacement: path.resolve(__dirname, 'src') },
-    ],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
 });
