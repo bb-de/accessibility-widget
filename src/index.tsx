@@ -1,4 +1,4 @@
-import './assets/style/widget-styles.css';
+import './asset/style/widget-styles.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
