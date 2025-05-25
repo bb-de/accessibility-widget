@@ -9,14 +9,14 @@ interface LogoImageProps {
 export function LogoImage({ className, width = 150, height = 40 }: LogoImageProps) {
   return (
     <div className={className} style={{ width, height }}>
-      <img 
-        src="/attached_assets/PluginVV.png" 
-        alt="Accessible Logo" 
-        style={{ 
-          width: '100%', 
-          height: '100%', 
-          objectFit: 'contain'
-        }} 
+      <img
+        src="/attached_assets/PluginMV.png" // ← Pfad bezieht sich auf /public!
+        alt="Accessible Logo"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+        }}
       />
     </div>
   );
