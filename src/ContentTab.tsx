@@ -9,98 +9,113 @@ export function ContentTab() {
     <div className="py-4 px-5 space-y-5">
       {/* Content Adjustments */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">{translations.contentAdjustments.toUpperCase()}</h3>
+        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+          {translations.contentAdjustments.toUpperCase()}
+        </h3>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-700">{translations.highlightTitles}</span>
-            <Switch 
+            <Switch
               checked={settings.highlightTitles}
               onCheckedChange={(checked) => updateSetting('highlightTitles', checked)}
-              aria-label={translations.toggleHighlightTitles}
+              aria-label={translations.toggleHighlightTitles || "Toggle highlight titles"}
             />
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-700">{translations.highlightLinks}</span>
-            <Switch 
+            <Switch
               checked={settings.highlightLinks}
               onCheckedChange={(checked) => updateSetting('highlightLinks', checked)}
-              aria-label={translations.toggleHighlightLinks}
+              aria-label={translations.toggleHighlightLinks || "Toggle highlight links"}
             />
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-700">{translations.textToSpeech}</span>
-            <Switch 
+            <Switch
               checked={settings.textToSpeech}
               onCheckedChange={(checked) => updateSetting('textToSpeech', checked)}
-              aria-label={translations.toggleTextToSpeech}
+              aria-label={translations.toggleTextToSpeech || "Toggle text to speech"}
             />
           </div>
         </div>
       </div>
-      
+
       {/* Reading Tools */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">{translations.readingTools.toUpperCase()}</h3>
+        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+          {translations.readingTools.toUpperCase()}
+        </h3>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-700">{translations.readingMask}</span>
-            <Switch 
+            <Switch
               checked={settings.readingMask}
               onCheckedChange={(checked) => updateSetting('readingMask', checked)}
-              aria-label={translations.toggleReadingMask}
+              aria-label={translations.toggleReadingMask || "Toggle reading mask"}
             />
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-700">{translations.readingGuide}</span>
-            <Switch 
+            <Switch
               checked={settings.readingGuide}
               onCheckedChange={(checked) => updateSetting('readingGuide', checked)}
-              aria-label={translations.toggleReadingGuide}
+              aria-label={translations.toggleReadingGuide || "Toggle reading guide"}
             />
           </div>
         </div>
       </div>
-      
+
       {/* Font Adjustments */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">{translations.fontAdjustments.toUpperCase()}</h3>
+        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+          {translations.fontAdjustments.toUpperCase()}
+        </h3>
         <div className="flex flex-wrap gap-2">
-          <button 
+          <button
             className={`px-3 py-2 text-xs font-medium ${
-              settings.fontFamily === 'readable' 
-                ? 'bg-primary text-white' 
+              settings.fontFamily === 'readable'
+                ? 'bg-primary text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             } rounded-md transition-colors`}
-            onClick={() => updateSetting('fontFamily', settings.fontFamily === 'readable' ? 'default' : 'readable')}
+            onClick={() =>
+              updateSetting('fontFamily', settings.fontFamily === 'readable' ? 'default' : 'readable')
+            }
+            aria-label={translations.readableFont || "Readable font"}
           >
             {translations.readableFont}
           </button>
-          <button 
+          <button
             className={`px-3 py-2 text-xs font-medium ${
-              settings.fontFamily === 'dyslexic' 
-                ? 'bg-primary text-white' 
+              settings.fontFamily === 'dyslexic'
+                ? 'bg-primary text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             } rounded-md transition-colors`}
-            onClick={() => updateSetting('fontFamily', settings.fontFamily === 'dyslexic' ? 'default' : 'dyslexic')}
+            onClick={() =>
+              updateSetting('fontFamily', settings.fontFamily === 'dyslexic' ? 'default' : 'dyslexic')
+            }
+            aria-label={translations.dyslexiaFont || "Dyslexia font"}
           >
             {translations.dyslexiaFont}
           </button>
-          <button 
+          <button
             className={`px-3 py-2 text-xs font-medium ${
-              settings.fontFamily === 'default' 
-                ? 'bg-primary text-white' 
+              settings.fontFamily === 'default'
+                ? 'bg-primary text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             } rounded-md transition-colors`}
             onClick={() => updateSetting('fontFamily', 'default')}
+            aria-label={translations.resetFont || "Reset font"}
           >
             {translations.resetFont}
           </button>
         </div>
       </div>
-      
+
       {/* Alignment & Spacing */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">{translations.alignmentSpacing.toUpperCase()}</h3>
+        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+          {translations.alignmentSpacing.toUpperCase()}
+        </h3>
         <div className="space-y-3">
           <div>
             <label className="flex items-center justify-between text-sm text-gray-700 mb-1">
@@ -108,7 +123,7 @@ export function ContentTab() {
               <span>{settings.wordSpacing}%</span>
             </label>
             <Slider
-              value={[settings.wordSpacing]} 
+              value={[settings.wordSpacing]}
               min={0}
               max={100}
               step={5}
@@ -117,49 +132,57 @@ export function ContentTab() {
             />
           </div>
           <div className="mt-4">
-            <h4 className="text-sm text-gray-700 mb-2">{translations.textAlignment || "Text Alignment"}</h4>
+            <h4 className="text-sm text-gray-700 mb-2">
+              {translations.textAlignment || "Text Alignment"}
+            </h4>
             <div className="grid grid-cols-3 gap-2">
-              <button 
+              <button
                 className={`flex flex-col items-center justify-center p-3 rounded-md transition-colors ${
-                  settings.textAlign === 'left' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  settings.textAlign === 'left'
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 onClick={() => updateSetting('textAlign', settings.textAlign === 'left' ? 'default' : 'left')}
-                aria-label="Align text left"
+                aria-label={translations.textAlignLeft || "Align left"}
               >
                 <div className="flex flex-col items-start mb-2 w-8">
-                  <div className="w-6 h-1 bg-current mb-1"></div>
-                  <div className="w-4 h-1 bg-current mb-1"></div>
-                  <div className="w-5 h-1 bg-current"></div>
+                  <div className="w-6 h-1 bg-current mb-1" />
+                  <div className="w-4 h-1 bg-current mb-1" />
+                  <div className="w-5 h-1 bg-current" />
                 </div>
                 <span className="text-xs">{translations.textAlignLeft || "Align Left"}</span>
               </button>
-              
-              <button 
+
+              <button
                 className={`flex flex-col items-center justify-center p-3 rounded-md transition-colors ${
-                  settings.textAlign === 'center' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  settings.textAlign === 'center'
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 onClick={() => updateSetting('textAlign', settings.textAlign === 'center' ? 'default' : 'center')}
-                aria-label="Align text center"
+                aria-label={translations.textAlignCenter || "Align center"}
               >
                 <div className="flex flex-col items-center mb-2 w-8">
-                  <div className="w-6 h-1 bg-current mb-1"></div>
-                  <div className="w-4 h-1 bg-current mb-1"></div>
-                  <div className="w-5 h-1 bg-current"></div>
+                  <div className="w-6 h-1 bg-current mb-1" />
+                  <div className="w-4 h-1 bg-current mb-1" />
+                  <div className="w-5 h-1 bg-current" />
                 </div>
                 <span className="text-xs">{translations.textAlignCenter || "Align Center"}</span>
               </button>
-              
-              <button 
+
+              <button
                 className={`flex flex-col items-center justify-center p-3 rounded-md transition-colors ${
-                  settings.textAlign === 'right' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  settings.textAlign === 'right'
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 onClick={() => updateSetting('textAlign', settings.textAlign === 'right' ? 'default' : 'right')}
-                aria-label="Align text right"
+                aria-label={translations.textAlignRight || "Align right"}
               >
                 <div className="flex flex-col items-end mb-2 w-8">
-                  <div className="w-6 h-1 bg-current mb-1"></div>
-                  <div className="w-4 h-1 bg-current mb-1"></div>
-                  <div className="w-5 h-1 bg-current"></div>
+                  <div className="w-6 h-1 bg-current mb-1" />
+                  <div className="w-4 h-1 bg-current mb-1" />
+                  <div className="w-5 h-1 bg-current" />
                 </div>
                 <span className="text-xs">{translations.textAlignRight || "Align Right"}</span>
               </button>
