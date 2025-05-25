@@ -3,7 +3,7 @@ import { useAccessibility } from '@/hooks/useAccessibility';
 import { ChevronDown } from 'lucide-react';
 import { Language } from '@/contexts/AccessibilityContext';
 
-// Flag components for each language
+// Flag components
 const FlagUK = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-3 mr-2" viewBox="0 0 60 30">
     <clipPath id="a"><path d="M0 0v30h60V0z"/></clipPath>
@@ -42,43 +42,47 @@ const FlagES = () => (
 );
 
 export function LanguageSelector() {
-  const { language, setLanguage } = useAccessibility();
+  const { language, setLanguage, translations } = useAccessibility();
   const [isOpen, setIsOpen] = React.useState(false);
-  
-  // Map languages to their display components
+
   const languageOptions: { value: Language; label: string; flag: React.ReactNode }[] = [
     { value: 'en', label: 'English', flag: <FlagUK /> },
     { value: 'de', label: 'Deutsch', flag: <FlagDE /> },
     { value: 'fr', label: 'Français', flag: <FlagFR /> },
     { value: 'es', label: 'Español', flag: <FlagES /> }
   ];
-  
-  // Get current language option
+
   const currentOption = languageOptions.find(option => option.value === language) || languageOptions[0];
-  
-  // Handle language selection
+
   const handleSelectLanguage = (lang: Language) => {
     setLanguage(lang);
     setIsOpen(false);
   };
-  
+
   return (
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center w-32 h-8 px-2 py-1 text-xs text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
-        aria-label={`Select language, current: ${currentOption.label}`}
+        aria-label={
+          translations.selectLanguageAria || `Select language, current: ${currentOption.label}`
+        }
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        id="language-selector"
       >
         {currentOption.flag}
         <span>{currentOption.label}</span>
         <ChevronDown className="w-4 h-4 ml-auto" />
       </button>
-      
+
       {isOpen && (
-        <div className="absolute right-0 z-10 w-32 mt-1 bg-white border border-gray-200 rounded-md shadow-lg">
-          <ul className="py-1" role="listbox" aria-label="Select language">
+        <div
+          className="absolute right-0 z-10 w-32 mt-1 bg-white border border-gray-200 rounded-md shadow-lg"
+          role="listbox"
+          aria-labelledby="language-selector"
+        >
+          <ul className="py-1">
             {languageOptions.map(option => (
               <li key={option.value} role="option" aria-selected={language === option.value}>
                 <button
