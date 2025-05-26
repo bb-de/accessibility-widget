@@ -13,8 +13,7 @@ export function AccessibleLogo({
 }: AccessibleLogoProps) {
   return (
     <div className={`flex items-center ${className}`}>
-      <img
-        src="/accessible-logo.png" // public/accessible-logo.png
+     <img src="/widget/accessible-logo.png"
         alt="Accessible Logo"
         style={{
           height: `${height}px`,
