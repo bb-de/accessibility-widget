@@ -4,7 +4,7 @@
   "description": "Barrierefreiheits-Widget für Webseiten",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp -r public/* dist/",
+    "build": "vite build && cpx \"public/**/*\" dist",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "typescript": "^5.0.0",
     "tailwindcss": "^3.4.0",
     "postcss": "^8.4.24",
-    "autoprefixer": "^10.4.14"
+    "autoprefixer": "^10.4.14",
+    "cpx": "^1.5.0"
   }
 }
