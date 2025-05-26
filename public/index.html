@@ -8,9 +8,22 @@
     <!-- React & ReactDOM global laden -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Beispielhafte Einbindung der PNGs -->
+    <style>
+      .logo {
+        max-width: 120px;
+        display: block;
+        margin-bottom: 20px;
+      }
+    </style>
   </head>
   <body>
     <h1>Demo: Barrierefreiheit Widget</h1>
+
+    <!-- Bilder korrekt aus public/ -->
+    <img src="/accessible-logo.png" alt="Accessible Logo" class="logo" />
+    <img src="/widget-button-logo.png" alt="Widget Button Logo" class="logo" />
 
     <!-- Dein gebündeltes Widget -->
     <script src="/accessibility-widget.iife.js"></script>
