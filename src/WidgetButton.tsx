@@ -1,6 +1,6 @@
 import React from 'react';
 
-const widgetButtonLogo = '/widget-button-logo.png'; // public/widget-button-logo.png
+const widgetButtonLogo = '/public/widget-button-logo.png';
 
 interface WidgetButtonProps {
   onClick: () => void;
