@@ -4,7 +4,6 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  publicDir: 'public', // <- Wichtig für statische Assets wie PNGs
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
@@ -13,7 +12,9 @@ export default defineConfig({
       formats: ['iife'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      // 👇 React NICHT mehr ausschließen
+      external: [],
+
       output: {
         globals: {
           react: 'React',
