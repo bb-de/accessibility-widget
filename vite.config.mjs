@@ -4,6 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  publicDir: 'public', // <- Wichtig für statische Assets wie PNGs
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
